@@ -72,7 +72,6 @@
                         if (res.data.success) {
                          //store token
                             this.$store.commit('setToken',res.data.token)
-
                             console.log(res.data);
                         }
                     })

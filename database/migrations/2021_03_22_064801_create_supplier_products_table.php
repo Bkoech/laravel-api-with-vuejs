@@ -15,10 +15,13 @@ class CreateSupplierProductsTable extends Migration
     {
         Schema::create('supplier_products', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
-            $table->integer('product_id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('supplier_id')->references('id')->on('supplier')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

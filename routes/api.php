@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +27,5 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get('/profile', [AuthController::class, 'userProfile']);
     Route::get('/admin', [AdminController::class,'index']);
     Route::resource('/products', ProductController::class);
-    Route::resource('/suppliers', SupplierController::class);
+    Route::resource('/suppliers',SupplierController::class);
 });

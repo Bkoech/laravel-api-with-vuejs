@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/{app?}','welcome')->where('app','.*');
+//Route::view('/{app?}','welcome')->where('app','.*');
+Route::get('/{app?}', function (){
+    return view('welcome');
+})->where('app', '^(?!api\/)[\/\w\.-]*');
