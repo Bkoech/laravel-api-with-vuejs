@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group([ 'middleware' => 'api'], function () {
-
-    Route::post('login', 'App\Http\Controllers\Api\AuthController@login')->name('login');
-    Route::post('checkToken', 'App\Http\Controllers\Api\AuthController@checkToken');
-    Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout');
-    Route::get('admin', 'App\Http\Controllers\Api\AdminController@index');
 
 
+Route::group(['middleware' => 'api'], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/checkToken', [AuthController::class, 'checkToken']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/profile', [AuthController::class, 'userProfile']);
+    Route::get('/admin', [AdminController::class,'index']);
+    Route::resource('/products', ProductController::class);
+    Route::resource('/suppliers', SupplierController::class);
 });

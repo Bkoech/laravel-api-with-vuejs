@@ -48,14 +48,18 @@
             if(this.$store.state.token !== ''){
                 axios.post('/api/checkToken', {token : this.$store.state.token})
                 .then(res => {
-                    if(res){
-                        this.loading = false;
+                    this.loading = false;
+                    if(res.data.success){
                         this.$router.push('/dashboard');
+                    } else {
+                        if(!res.data.success){
+                            this.$store.commit('setToken',res.data.token);
+                        }
                     }
                 })
                 .catch(err => {
                     this.loading = false;
-                    this.$store.commit('clearToken');
+                    // this.$store.commit('clearToken');
                 })
             } else {
                 this.loading = false;
