@@ -11,16 +11,25 @@ Veu.use(VueRouter);
 
 export const routes = [
     {
-        path:'/',
+        path:'',
         component:Home,
+        meta: {
+            auth: undefined
+        }
     },
     {
-        path:'/login',
+        path:'login',
         component:Login,
+        meta: {
+            auth: false
+        }
     },
     {
-        path:'/dashboard',
+        path:'dashboard',
         component:Dashboard,
+        meta: {
+            auth: true
+        }
     },
     //Products
     {
@@ -40,3 +49,9 @@ export const routes = [
         component: EditProduct
     }
 ]
+const router = new VueRouter({
+    history: true,
+    mode: 'history',
+    routes,
+})
+export default router

@@ -1,23 +1,41 @@
 <template>
-    <div>
-        <div class="navbar">
-            <div>
-                <router-link to="/"> Home</router-link>
-            </div>
-            <div>
-                <router-link to="/login"> Login</router-link>
-            </div>
-            <div>
-                <router-link to="/dashboard"> Dashboard</router-link>
-            </div>
+    <div id="main">
+        <header id="header">
+            <Menu></Menu>
+        </header>
+        <div id="content">
+            <router-view></router-view>
         </div>
-        <router-view></router-view>
     </div>
+<!--    <div>-->
+<!--        <div class="navbar">-->
+<!--            <div>-->
+<!--                <router-link to="/"> Home</router-link>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <router-link to="/login"> Login</router-link>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <router-link to="/dashboard"> Dashboard</router-link>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <router-view></router-view>-->
+<!--    </div>-->
 </template>
 
 <script>
+    import Menu from './components/Menu.vue'
     export default {
-        name: "App"
+        name: "App",
+        data() {
+            return {
+                //
+            }
+        },
+        components: {
+            Menu
+        }
+
     }
 </script>
 

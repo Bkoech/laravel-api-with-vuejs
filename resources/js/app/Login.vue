@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="login" v-else>
-        <form>
+        <form autocomplete="off" @submit.prevent="login" method="post">
             <div class="form-group row">
                 <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                 <div class="col-md-6">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-md-6 offset-md-4">
-                <button type="submit" class="btn btn-primary" @click.prevent="login">Login</button>
+                <button type="submit" class="btn btn-primary">Login</button>
 
             </div>
         </form>
@@ -44,27 +44,27 @@
             }
 
         },
-        mounted() {
-            if(this.$store.state.token !== ''){
-                axios.post('/api/checkToken', {token : this.$store.state.token})
-                .then(res => {
-                    this.loading = false;
-                    if(res.data.success){
-                        this.$router.push('/dashboard');
-                    } else {
-                        if(!res.data.success){
-                            this.$store.commit('setToken',res.data.token);
-                        }
-                    }
-                })
-                .catch(err => {
-                    this.loading = false;
-                    // this.$store.commit('clearToken');
-                })
-            } else {
-                this.loading = false;
-            }
-        },
+        // mounted() {
+        //     if(this.$store.state.token !== ''){
+        //         axios.post('/api/checkToken', {token : this.$store.state.token})
+        //         .then(res => {
+        //             this.loading = false;
+        //             if(res.data.success){
+        //                 this.$router.push('/dashboard');
+        //             } else {
+        //                 if(!res.data.success){
+        //                     this.$store.commit('setToken',res.data.token);
+        //                 }
+        //             }
+        //         })
+        //         .catch(err => {
+        //             this.loading = false;
+        //             // this.$store.commit('clearToken');
+        //         })
+        //     } else {
+        //         this.loading = false;
+        //     }
+        // },
         methods: {
             login() {
                 axios.post('/api/login', this.credentials)
@@ -78,6 +78,31 @@
                     .catch(er => {
                         console.log('Error!')
                     })
+            }
+        },
+        methods: {
+            login() {
+                // get the redirect object
+                var redirect = this.$auth.redirect()
+                var app = this
+                this.$auth.login({
+                    data: {
+                        email: app.email,
+                        password: app.password
+                    },
+                    success: function () {
+                        // handle redirection
+                        app.success = true
+                        const redirectTo = 'dashboard'
+                        this.$router.push({name: redirectTo})
+                    },
+                    error: function () {
+                        app.has_error = true
+                        app.error = res.response.data.error
+                    },
+                    rememberMe: true,
+                    fetchUser: true
+                })
             }
         }
     }
